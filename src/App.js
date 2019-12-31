@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+
+import { handleReceivePhotos } from "./store/actions/photos";
+import { handleReceiveUsers } from "./store/actions/users";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  const { photos } = useSelector(state => state.photos);
+  const { users } = useSelector(state => state.users);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Promise.all([
+      dispatch(handleReceiveUsers()),
+      dispatch(handleReceivePhotos())
+    ]).then(() => setLoading(false));
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {loading ? (
+        <p>CARREGANDO</p>
+      ) : (
+        <div>
+          {photos.map(photo => (
+            <>
+              <li key={photo.id}>{photo.title}</li>
+              <img src={photo.url} alt="" />
+            </>
+          ))}
+          {users.map(user => (
+            <>
+              <li key={user.id}>{user.name}</li>
+            </>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
