@@ -22,7 +22,7 @@ function App() {
   return (
     <div>
       {loading ? (
-        <p>CARREGANDO</p>
+        <p>LOADING</p>
       ) : (
         <div>
           {photos.map(photo => (
