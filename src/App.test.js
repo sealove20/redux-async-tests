@@ -1,9 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import users from "./store/reducers/users";
 
-it("renders without crashing", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+test("users reducer", () => {
+  it("should return the initial state", () => {
+    expect(users(undefined, {}).toEqual({}));
+  });
 });

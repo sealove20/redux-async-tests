@@ -17,7 +17,7 @@ function App() {
       dispatch(handleReceiveUsers()),
       dispatch(handleReceivePhotos())
     ]).then(() => setLoading(false));
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>
